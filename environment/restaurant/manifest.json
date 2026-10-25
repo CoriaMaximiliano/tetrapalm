@@ -1,0 +1,12 @@
+{
+  "blender": "5.2.0 LTS",
+  "source": "art/blender/restaurante.blend",
+  "asset": "public/environment/restaurant/restaurant.glb",
+  "sourceObjects": 2113,
+  "batches": 11,
+  "triangles": 233060,
+  "aoRays": 792792,
+  "bytes": 19944304,
+  "units": "metres",
+  "base": "art/restaurante-base-2026-10-08/restaurant.glb"
+}

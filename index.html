@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#F5F1E7" />
+  <meta name="description" content="Un puzzle espacial sobre el dorso de tu mano. Prepará pedidos para cuatro mesas, encontrá el equilibrio y salvá la bandeja." />
+  <title>TetraPalm — En tus manos</title>
+  <script>/* Headset browsers see only the VR entry page, from the first paint (see src/main.ts). */
+    (function () { var q = location.search; if (/[?&]quest=1/.test(q) || (!/[?&]desktop=1/.test(q) && /OculusBrowser|Quest|Pico|Wolvic/i.test(navigator.userAgent))) document.documentElement.dataset.gate = 'quest'; })();</script>
+  <script type="module" crossorigin src="./assets/game-TUcsjohe.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/studio-Dr9xouGd.js">
+  <link rel="stylesheet" crossorigin href="./assets/game-S2ydSjP7.css">
+</head>
+<body data-screen="home">
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="TetraPalm inicio"><span class="brand-mark"><i></i><i></i><i></i></span>TetraPalm<span class="brand-dot">.</span></a>
+    <div class="top-meta"><span class="live-dot"></span> HECHO PARA TUS MANOS <span class="version">MVP 02</span></div>
+    <button id="xr-enter" class="button button-dark" disabled><span class="headset-icon">◉</span> Entrar con Quest <span>↗</span></button>
+  </header>
+  <section id="quest-gate" class="quest-gate" aria-label="Entrar en VR">
+    <div class="quest-gate-card">
+      <span class="brand-mark quest-gate-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <h1>TetraPalm<span class="brand-dot">.</span></h1>
+      <span class="quest-gate-badge">META QUEST 3 · 3S · SEGUIMIENTO DE MANOS</span>
+      <p class="quest-gate-lead">Tu mano es la bandeja. Se juega en VR, sólo con las manos.</p>
+      <button id="quest-gate-enter" class="quest-gate-enter" disabled><span class="play-now-icon" aria-hidden="true">▶</span><span id="quest-gate-label">Cargando…</span></button>
+      <ol class="quest-gate-steps">
+        <li>Dejá los controles a un lado.</li>
+        <li>Pellizcá el botón verde para entrar.</li>
+        <li>Si el Quest lo pide, permití el seguimiento de manos.</li>
+      </ol>
+      <p class="quest-gate-note">Modos, niveles, tutorial y ranking están en el menú dentro de la VR.</p>
+      <button id="quest-gate-desktop" class="quest-gate-link">Ver la versión de escritorio</button>
+    </div>
+  </section>
+  <main class="layout">
+    <section class="play-area" aria-label="Escena del juego">
+      <div class="intro">
+        <div class="eyebrow">TU RESTAURANTE EN EQUILIBRIO</div>
+        <h1>Todo está<br>en tus <em>manos.</em></h1>
+        <p>Prepará. Compensá. No la dejes caer.</p>
+      </div>
+      <div id="scene-container"></div>
+      <div class="scene-tag"><span class="live-dot"></span><span id="input-mode">ESCRITORIO · MANO SIMULADA</span></div>
+      <div class="scene-annotation"><span class="annotation-line"></span><span>LA BANDEJA SOBRE TU DORSO</span></div>
+      <div id="placement-hint" class="placement-hint">Repartí el peso. Encontrá el centro.</div>
+      <div class="scene-bottom"><span>01 / CUATRO MESAS. UNA BANDEJA.</span><span id="render-label">Cargando escena…</span></div>
+      <div id="toast" role="status" aria-live="polite"></div>
+      <div id="fatal" hidden role="alert"></div>
+    </section>
+
+    <section id="home" class="home" aria-label="Menú inicial">
+      <div class="home-heading"><span class="eyebrow">TU PRÓXIMO SERVICIO</span><span id="home-progress">0 / 20 desafíos</span></div>
+      <h2>Encontrá tu equilibrio.</h2><p class="home-lead">Sos el mozo. Cuatro mesas, una bandeja: prepará y despachá pedidos.</p>
+      <div class="home-tabs" role="tablist" aria-label="Menú principal">
+        <button id="tab-play" role="tab" aria-selected="true" aria-controls="home-play" tabindex="0" data-home-tab="play">Jugar</button>
+        <button id="tab-learn" role="tab" aria-selected="false" aria-controls="home-learn" tabindex="-1" data-home-tab="learn">Aprender</button>
+        <button id="tab-settings" role="tab" aria-selected="false" aria-controls="home-settings" tabindex="-1" data-home-tab="settings">Ajustes</button>
+        <button id="tab-ranking" role="tab" aria-selected="false" aria-controls="home-ranking" tabindex="-1" data-home-tab="ranking">Ranking</button>
+      </div>
+      <div id="home-play" role="tabpanel" aria-labelledby="tab-play">
+        <button id="home-play-now" class="home-play-now"><span class="play-now-icon" aria-hidden="true">▶</span><span class="play-now-text"><strong id="play-now-title">Jugar ahora</strong><small id="play-now-sub"></small></span><span class="play-now-arrow" aria-hidden="true">→</span></button>
+        <section class="collection-card mode-progress-board" aria-label="Avance por modo"><h3>Tu avance</h3><p>Cinco rutas de dominio. Completá cada meta y seguí mejorando tus marcas.</p><div id="mode-progress-rows"></div><p>El 100% completa la ruta; todos los modos siguen disponibles.</p></section>
+        <section class="collection-card" aria-label="Tu colección"><div class="mission-heading"><strong id="collection-title">Tu restaurante empieza acá</strong><span id="collection-stars">★ 0 / 60</span></div><progress id="collection-bar" max="60" value="0" aria-label="Estrellas de los desafíos"></progress><p id="collection-next"></p><div id="star-board-rows"></div><div id="achievement-list" class="achievement-list" aria-label="Logros acumulativos"></div></section>
+        <div id="home-resume" class="home-resume" hidden><span>Tu bandeja está en pausa.</span><button id="home-continue">Continuar →</button><button id="home-end">Terminar partida y elegir</button></div>
+        <div class="experience-grid" aria-label="Experiencias">
+          <button data-mode="balance" class="experience featured" aria-pressed="false"><span class="mode-art art-calm" aria-hidden="true">♧</span><span class="mode-duration">⚡ ARCADE · CADA VEZ MÁS RÁPIDO</span><strong>Solo equilibrio</strong><span>Llegan grupos de copas, cada vez más grandes y rápidos. Compensá el peso y aguantá.</span><span class="feature-record">Tu marca: <b id="balance-record">—</b></span></button>
+          <button data-mode="repair" class="experience" aria-pressed="true"><span class="mode-art art-repair" aria-hidden="true">▦</span><span class="mode-duration">20 NIVELES</span><strong>Reparación</strong><span>Encajá, repartí el peso y aprendé a salvar la bandeja.</span></button>
+          <button data-mode="calm" class="experience" aria-pressed="false"><span class="mode-art art-calm" aria-hidden="true">≈</span><span class="mode-duration">SIN RELOJ</span><strong>Tranquilo</strong><span>Prepará a tu ritmo, sin caída automática ni derrota.</span></button>
+          <button data-mode="timed" class="experience" aria-pressed="false"><span class="mode-art art-timed" aria-hidden="true">◷</span><span class="mode-duration">5 A 7 MINUTOS</span><strong>Contrarreloj</strong><span>Cumplí la misión y sumá puntos sin perder el margen.</span></button>
+          <button data-mode="daily" class="experience" aria-pressed="false"><span class="mode-art art-daily" aria-hidden="true">✳</span><span class="mode-duration">CAMBIA CADA DÍA</span><strong>Desafío del día</strong><span>Un problema preparado y un objetivo que cambia cada día.</span></button>
+        </div>
+        <div id="home-route"><div class="route-heading"><span class="caption">TU RECORRIDO</span><span>20 niveles por modo · Elegí una misión o seguí tu resistencia/taller</span></div><div id="home-levels" class="home-levels" aria-label="Desafíos de reparación"></div></div>
+        <div class="home-selection"><span id="home-selection-meta" class="caption"></span><h3 id="home-selection-title"></h3><p id="home-selection-description"></p></div>
+        <p id="home-star-rules" class="star-rules"></p>
+        <p id="home-medals" class="mastery" aria-live="polite"></p><div class="home-record"><span>Tu mejor marca en esta experiencia</span><strong id="home-record">—</strong></div>
+        <button id="home-start" class="button home-primary" disabled>Preparar pedidos →</button>
+        <button id="home-rescue" class="home-first">Mi primera salvada · Aprender y jugar →</button>
+        <button id="home-first" class="home-first">¿Primera vez? Aprendé con manos 3D →</button>
+      </div>
+      <div id="home-learn" role="tabpanel" aria-labelledby="tab-learn" hidden><p class="tab-intro">Mirá la demostración y probá cada acción. La práctica avanza con tus manos y no tiene derrota.</p><div class="course-list">
+        <button data-course="intro"><span>01</span><div><strong>Primer pedido</strong><small>Mover, rotar y colocar una pieza.</small></div><i>→</i></button>
+        <button data-course="tower"><span>02</span><div><strong>Las cuatro mesas</strong><small>Girar toda la bandeja en ambos sentidos.</small></div><i>→</i></button>
+        <button data-course="balance"><span>03</span><div><strong>Encontrar el centro</strong><small>Compensar, frenar y repartir el peso.</small></div><i>→</i></button>
+        <button data-course="full"><span>04</span><div><strong>Todos los gestos</strong><small>El recorrido completo, paso a paso.</small></div><i>→</i></button>
+      </div><p class="home-note">Apoyá el codo y relajá los hombros. Podés descansar durante cualquier partida.</p></div>
+      <div id="home-ranking" role="tabpanel" aria-labelledby="tab-ranking" hidden>
+        <p class="tab-intro">Competí con jugadores de todo el mundo. Se muestra el top 20 de cada tablero; con «Mi puesto» ves dónde estás y quiénes te rodean.</p>
+        <div class="rank-controls"><select id="rank-board" aria-label="Tablero"></select><div class="rank-scope" role="group" aria-label="Temporada"><button type="button" data-rank-scope="week">Esta semana</button><button type="button" data-rank-scope="all">Histórico</button></div></div>
+        <div class="rank-view" role="group" aria-label="Vista"><button type="button" id="rank-top">Top 20</button><button type="button" id="rank-mine">Mi puesto</button></div>
+        <p id="rank-status" class="rank-status" aria-live="polite"></p>
+        <ol id="rank-rows" class="rank-rows" aria-label="Posiciones"></ol>
+        <p id="rank-me" class="rank-me"></p>
+        <form id="rank-search" class="rank-form"><input id="rank-q" type="search" maxlength="24" placeholder="Buscar apodo o #1234" aria-label="Buscar jugador"><button>Buscar</button></form>
+        <form id="rank-name-form" class="rank-form"><input id="rank-name" maxlength="18" minlength="3" autocomplete="nickname" aria-label="Tu apodo" placeholder="Tu apodo"><button>Guardar apodo</button></form>
+        <p class="home-note">Jugás como <b id="rank-player">—</b>. <span id="rank-name-status"></span> Cada ronda se rehace en el servidor antes de entrar al tablero. «Menor esfuerzo» y Tranquilo no compiten.</p>
+      </div>
+      <div id="home-settings" role="tabpanel" aria-labelledby="tab-settings" hidden><p class="tab-intro">Prepará la experiencia antes de empezar.</p><div id="home-settings-slot"></div><p class="home-note">Elegí la mano de apoyo entre rondas, también dentro de Quest. Las ayudas se eligen antes de cada partida; cada configuración guarda su propio récord.</p></div>
+      <div class="home-foot"><span>ESCRITORIO O QUEST 3</span><span>Sin mandos. Con tus manos.</span></div>
+    </section>
+    <aside class="sidebar">
+      <button id="home-back" class="home-back">← Volver al inicio</button>
+      <div class="mode-picker">
+        <label for="game-mode">ELEGÍ TU EXPERIENCIA</label>
+        <select id="game-mode"><option value="repair">Desafíos de reparación</option><option value="timed">Contrarreloj · 5 a 7 minutos</option><option value="calm">Modo tranquilo</option><option value="balance">Solo equilibrio · Copas rápidas</option><option value="daily">Desafío del día</option></select>
+        <label for="challenge-select" id="challenge-label">NIVEL</label><select id="challenge-select"></select>
+        <p id="mode-description"></p>
+      </div>
+      <div class="section-heading"><span class="eyebrow">TU PARTIDA</span><span class="round-label">03:00 / RONDA</span></div>
+      <div class="score-row"><div><span class="caption">PUNTOS</span><strong id="score">0000</strong></div><div class="timer-box"><span class="caption">TIEMPO</span><strong id="timer">03:00</strong></div></div>
+      <div class="record-row"><span>Tu mejor ronda</span><span id="record">—</span></div>
+      <section id="mission-card" class="mission-card" aria-label="Avance de la misión"><div class="mission-heading"><strong id="mission-stage"></strong><span id="mission-percent">0%</span></div><progress id="mission-bar" value="0" max="100" aria-label="Progreso de la misión"></progress><div id="mission-goals" class="mission-goals"></div><div id="mission-stars" class="star-rules"></div></section>
+      <div class="balance-card">
+        <div class="balance-heading"><span id="balance-label">En equilibrio</span><span id="danger-value">0%</span></div>
+        <div class="danger-track"><div id="danger-bar"></div></div>
+        <p id="status">Listo para empezar. Apoyá el codo y relajá la mano.</p>
+        <p id="objective" class="objective"></p><p id="balance-explanation"></p>
+      </div>
+      <div id="forecast" class="forecast" role="status" aria-live="polite">El contorno anticipa dónde quedará la pieza.</div>
+      <div class="faces-heading"><span class="caption">PESO POR MESA</span><span id="line-count">0 tandas</span></div>
+      <div class="faces" aria-label="Elegir mesa">
+        <button class="face active" data-face="0" aria-label="Elegir mesa Coral"><span class="face-symbol" style="--face:var(--tp-coral)">①</span><span>Coral</span><span class="face-weight" id="mass-0">0</span><i id="mass-bar-0"></i></button>
+        <button class="face" data-face="1" aria-label="Elegir mesa Lima"><span class="face-symbol" style="--face:var(--tp-lime)">②</span><span>Lima</span><span class="face-weight" id="mass-1">0</span><i id="mass-bar-1"></i></button>
+        <button class="face" data-face="2" aria-label="Elegir mesa Cielo"><span class="face-symbol" style="--face:var(--tp-sky)">③</span><span>Cielo</span><span class="face-weight" id="mass-2">0</span><i id="mass-bar-2"></i></button>
+        <button class="face" data-face="3" aria-label="Elegir mesa Lavanda"><span class="face-symbol" style="--face:var(--tp-lavender)">④</span><span>Lavanda</span><span class="face-weight" id="mass-3">0</span><i id="mass-bar-3"></i></button>
+      </div>
+      <div class="next-row"><span class="caption">SIGUIENTE PIEZA</span><div class="next-preview" id="next-preview"></div><span id="next-name">—</span></div>
+      <section id="round-result" class="round-result" hidden aria-live="polite"><h3 id="result-title"></h3><div id="result-stars" class="result-stars"></div><p id="result-rank" class="result-rank"></p><p id="result-progress" class="result-progress"></p><p id="result-reward"></p><p id="result-next"></p><p id="result-stats"></p><p id="result-improvement"></p><p id="result-badges" class="mastery"></p><p id="result-advice"></p></section>
+      <button id="repeat-round" class="button" hidden>Repetir esta ronda →</button>
+      <button id="start" class="button button-start" disabled>Empezar partida <span>→</span></button>
+      <button id="next-challenge" class="button button-start" hidden>Siguiente desafío →</button>
+      <button id="tutorial" class="button">Primera misión con manos 3D</button>
+      <button id="tutorial-full" class="button">Practicar todos los gestos</button>
+      <button id="tutorial-skip" class="button" hidden>Salir de la práctica y jugar</button>
+      <div class="secondary-actions"><button id="pause" disabled>Pausar <kbd>P</kbd></button><button id="restart" disabled>Reiniciar <span>↻</span></button></div>
+      <button id="exit-game" class="button">Cerrar juego <kbd>Esc</kbd></button>
+      <div class="divider"></div>
+      <div class="controls-header"><span class="eyebrow">PROBALO EN ESCRITORIO</span><button id="help-toggle" aria-expanded="true" aria-controls="controls">?</button></div>
+      <div id="controls">
+        <div class="control-row"><span>Mover pieza</span><span><kbd>←</kbd><kbd>→</kbd></span></div>
+        <div class="control-row"><span>Girar pedidos</span><span><kbd>Q</kbd><kbd>E</kbd><kbd>↑</kbd></span></div>
+        <div class="control-row"><span>Rotar pieza</span><span><kbd>R</kbd></span></div>
+        <div class="control-row"><span>Colocar / caída rápida</span><span><kbd>Espacio</kbd><kbd>↓</kbd></span></div>
+        <div class="control-row"><span>Inclinar la mano</span><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></div>
+        <div class="control-row"><span>Nivelar apoyo</span><span><kbd>N</kbd></span></div>
+      </div>
+      <div class="settings"><label><input id="ease" type="checkbox"> Menor esfuerzo</label><label><input id="mirror" type="checkbox"> Apoyo en mano derecha</label><label><input id="forecast-help" type="checkbox" checked> Anticipar equilibrio</label><label><input id="sound" type="checkbox" checked> Sonido general</label><label><input id="music" type="checkbox" checked> Música</label><label>Volumen de música <input id="music-volume" type="range" min="0" max="1" step="0.1" value="0.7"></label><label><input id="effects" type="checkbox" checked> Efectos y avisos</label><label>Volumen de efectos <input id="effects-volume" type="range" min="0" max="1" step="0.1" value="0.8"></label><label><input id="full-guide" type="checkbox"> Guía completa en VR</label><label><input id="coach-hands" type="checkbox" checked> Manos guía en partida (VR)</label><label><input id="profile-frames" type="checkbox"> Medir fluidez (datos locales)</label><label>Idioma <select id="language"><option value="en">English</option><option value="es">Español</option></select></label></div>
+      <p id="frame-metrics" class="frame-metrics" hidden></p><details class="lab"><summary>Pruebas de tracking <span>＋</span></summary><button id="tracking-test">Simular pérdida de tracking</button><button id="tilt-reset">Volver a mano horizontal</button><button id="save-replay">Guardar replay de esta partida</button></details>
+    </aside>
+  </main>
+  <section id="closed-screen" hidden style="padding:4rem;text-align:center">
+    <h1>Partida detenida</h1>
+    <p>Saliste del modo VR. El navegador y esta página siguen abiertos.</p>
+    <button id="save-diagnostics" class="button">Guardar diagnóstico</button>
+    <button id="reopen-game" class="button button-dark">Volver al juego</button>
+  </section>
+  <footer class="footer"><span>PUZZLE ESPACIAL · HANDS FIRST</span><span><span class="footer-dot"></span> Equilibrio antes que velocidad.</span><span>Quest 3 + WebXR <span class="footer-arrow">↗</span></span></footer>
+</body>
+</html>

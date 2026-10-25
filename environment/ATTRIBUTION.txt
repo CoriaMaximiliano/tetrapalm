@@ -1,0 +1,18 @@
+TetraPalm — Jardín flotante
+
+Vegetación y roca: Kenney, Nature Kit (archivo descargado: versión 2.1).
+Fuente: https://kenney.nl/assets/nature-kit
+Descarga: https://kenney.nl/media/pages/assets/nature-kit/37ac38a37b-1677698939/kenney_nature-kit.zip
+Licencia: Creative Commons Zero (CC0).
+Licencia original conservada en kenney/License.txt.
+Modelos utilizados: tree_default.glb, tree_oak.glb, tree_default_fall.glb, rock_largeA.glb.
+
+Terraza, islas, cielo procedural, nubes y composición: creados para TetraPalm.
+No se ha incorporado un HDRI de Poly Haven.
+
+Sillas del restaurante: Painted Wooden Chair 01 (1k), Kuutti Siitonen, Poly Haven.
+Fuente: https://polyhaven.com/a/painted_wooden_chair_01
+Licencia: Creative Commons Zero (CC0). Original en art/imports/painted_wooden_chair_01_1k/.
+
+Letras 3D (atril, pizarra, mesas, cartel): fuente integrada de Blender (Inter), SIL Open Font License 1.1.
+Lista completa de créditos y licencias: CREDITS.md en la raíz del proyecto.

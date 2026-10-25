@@ -1,0 +1,14 @@
+{
+  "source": "art/blender/tutorial-bistro.blend",
+  "glove": {
+    "bones": 16,
+    "triangles": 14436
+  },
+  "boards": {
+    "PizarraTutorial": 5668,
+    "PizarritaCoach": 4208
+  },
+  "boardBatches": 12,
+  "bytes": 1172948,
+  "palette": "src/palette.ts"
+}

@@ -1,0 +1,26 @@
+{
+  "units": "metres",
+  "source": "src/view/models.ts",
+  "restaurantSource": "src/view/restaurant-garden.ts",
+  "restaurantNotes": "Static architecture and furniture; runtime canvas signage and relief maps omitted.",
+  "block": {
+    "bytes": 62536,
+    "meshes": 3,
+    "triangles": 576
+  },
+  "base": {
+    "bytes": 33604,
+    "meshes": 2,
+    "triangles": 1248
+  },
+  "chassis": {
+    "bytes": 679888,
+    "meshes": 2,
+    "triangles": 5760
+  },
+  "restaurant": {
+    "bytes": 11005324,
+    "meshes": 7,
+    "triangles": 83308
+  }
+}

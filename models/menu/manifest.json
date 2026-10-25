@@ -1,0 +1,8 @@
+{
+  "source": "art/blender/menu-bistro.blend",
+  "objects": 59,
+  "batches": 6,
+  "triangles": 22340,
+  "bytes": 1064856,
+  "palette": "src/palette.ts"
+}
